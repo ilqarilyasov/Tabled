@@ -30,6 +30,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
     
+    @IBAction func editTable(_ sender: UIBarButtonItem) {
+        tableView.setEditing(true, animated: true)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(stopEditingTable(_sender:)))
+    }
+    
+    @objc func stopEditingTable( _sender: Any) {
+        tableView.setEditing(false, animated: true)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editTable(_:)))
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Model.shared.itemCount()
     }
