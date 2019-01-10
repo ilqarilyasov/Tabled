@@ -25,10 +25,9 @@ class Model {
     
     func moveItem(from index: Int, to destinationIndex: Int) {
         let item = items[index]
-        items.remove(at: index)
         let itemAtDestination = items[destinationIndex]
+        items[index] = itemAtDestination
         items[destinationIndex] = item
-        items[destinationIndex + 1] = itemAtDestination
     }
     
     func itemCount() -> Int {
