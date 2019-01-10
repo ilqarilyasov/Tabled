@@ -28,6 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         guard let text = textField.text, !text.isEmpty else { return }
         Model.shared.addItem(text)
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+        textField.text = nil
     }
     
     @IBAction func editTable(_ sender: UIBarButtonItem) {
