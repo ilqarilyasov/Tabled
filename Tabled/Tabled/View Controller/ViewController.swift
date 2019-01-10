@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
@@ -17,6 +17,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        textField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,5 +65,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         Model.shared.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        add(UIButton())
+        return true
+    }
 }
