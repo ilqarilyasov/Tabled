@@ -75,4 +75,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         add(UIButton())
         return true
     }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            print("Shaked the phone")
+        }
+    }
+    @IBAction func shareList(_ sender: Any) {
+        let list = itemCont.items.map({ $0.title }).joined(separator: "\n")
+        let share = UIActivityViewController(activityItems: [list], applicationActivities: nil)
+        share.popoverPresentationController?.sourceView = self.view
+        
+        present(share, animated: true, completion: nil)
+    }
 }
