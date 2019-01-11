@@ -38,6 +38,10 @@ class Model {
         return items[index]
     }
     
+    func edit(item: String, at index: Int){
+        items[index] = item
+    }
+    
     let fileURL = URL(fileURLWithPath: NSHomeDirectory())
     .appendingPathComponent("Library")
     .appendingPathComponent("ToDo")

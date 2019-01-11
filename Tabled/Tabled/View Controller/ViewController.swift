@@ -34,6 +34,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        Model.shared.addItem(text)
         
         if let index = editItemIndex {
+//            Model.shared.edit(item: text, at: editItemIndex)
             itemCont.edit(item: text, at: index)
             tableView.reloadData()
         } else {
