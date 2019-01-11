@@ -12,6 +12,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
+    let itemCont = ItemController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func add(_ sender: UIButton) {
         guard let text = textField.text, !text.isEmpty else { return }
-        Model.shared.addItem(text)
+//        Model.shared.addItem(text)
+        itemCont.addItem(text)
         tableView.insertRows(at: [IndexPath(row: Model.shared.itemCount() - 1, section: 0)], with: .automatic)
         textField.text = nil
     }
@@ -44,12 +46,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Model.shared.itemCount()
+//        return Model.shared.itemCount()
+        return itemCont.itemCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = Model.shared.item(at: indexPath.row)
+//        cell.textLabel?.text = Model.shared.item(at: indexPath.row)
+        cell.textLabel?.text = itemCont.item(at: indexPath.row).title
         
         return cell
     }
@@ -57,12 +61,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         guard editingStyle == .delete else { return }
-        Model.shared.removeItem(at: indexPath.row)
+//        Model.shared.removeItem(at: indexPath.row)
+        itemCont.removeItem(at: indexPath.row)
         tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        Model.shared.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
+//        Model.shared.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        itemCont.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
