@@ -12,7 +12,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var addButton: UIButton!
+    
     let itemCont = ItemController()
+    var editItemIndex: Int? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +32,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func add(_ sender: UIButton) {
         guard let text = textField.text, !text.isEmpty else { return }
 //        Model.shared.addItem(text)
-        itemCont.addItem(text)
-        tableView.insertRows(at: [IndexPath(row: Model.shared.itemCount() - 1, section: 0)], with: .automatic)
+        
+        if let index = editItemIndex {
+            itemCont.edit(item: text, at: index)
+            tableView.reloadData()
+        } else {
+            itemCont.addItem(text)
+            tableView.insertRows(at: [IndexPath(row: Model.shared.itemCount() - 1, section: 0)], with: .automatic)
+        }
         textField.text = nil
+        addButton.setTitle("Add", for: .normal)
     }
     
     @IBAction func editTable(_ sender: UIBarButtonItem) {
@@ -71,21 +81,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         itemCont.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        add(UIButton())
-        return true
+    // MARK: - Stretch Goals 1
+    
+    @IBAction func shareList(_ sender: Any) {
+        let listArray = itemCont.items.map({ $0.title })
+        let listString = listArray.joined(separator: "\n")
+        let share = UIActivityViewController(activityItems: [listString], applicationActivities: nil)
+        share.popoverPresentationController?.sourceView = self.view
+        
+        present(share, animated: true, completion: nil)
+        print(listString)
     }
+    
+    // MARK: - Stretch Goal 2
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = itemCont.item(at: indexPath.row)
+        textField.text = item.title
+        addButton.setTitle("Done", for: .normal)
+        editItemIndex = indexPath.row
+    }
+    
+    // MARK: - Stretch Goal 3
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
             print("Shaked the phone")
         }
     }
-    @IBAction func shareList(_ sender: Any) {
-        let list = itemCont.items.map({ $0.title }).joined(separator: "\n")
-        let share = UIActivityViewController(activityItems: [list], applicationActivities: nil)
-        share.popoverPresentationController?.sourceView = self.view
-        
-        present(share, animated: true, completion: nil)
+    
+    // MARK: - Extra
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        add(UIButton())
+        return true
     }
 }

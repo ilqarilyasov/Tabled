@@ -77,6 +77,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="D1f-t9-AG5" id="p5K-6O-brt"/>
                         <outlet property="tableView" destination="d28-ld-TtH" id="f5c-gF-RGF"/>
                         <outlet property="textField" destination="BjD-dB-nvZ" id="1Td-qj-syo"/>
                     </connections>

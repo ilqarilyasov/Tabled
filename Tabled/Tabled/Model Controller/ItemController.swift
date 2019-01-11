@@ -36,6 +36,11 @@ class ItemController {
         return items[index]
     }
     
+    func edit(item: String, at index: Int){
+        let newItem = Item(title: item)
+        items[index] = newItem
+    }
+    
     let fileURL = URL(fileURLWithPath: NSHomeDirectory())
         .appendingPathComponent("Library")
         .appendingPathComponent("ToDo")
